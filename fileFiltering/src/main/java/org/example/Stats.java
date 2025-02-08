@@ -91,4 +91,55 @@ public class Stats {
 
     }
 
+    public int getCountIntegers() {
+        return countIntegers;
+    }
+
+    public long getSumIntegers() {
+        return sumIntegers;
+    }
+
+    public int getMaxIntegers() {
+        return maxIntegers;
+    }
+
+    public int getMinIntegers() {
+        return minIntegers;
+    }
+    
+    public double getAverageIntegers() {
+        return averageIntegers;
+    }
+
+    public int getCountFloats() {
+        return countFloats;
+    }
+
+    public double getMinFloats() {
+        return minFloats;
+    }
+
+    public double getMaxFloats() {
+        return maxFloats;
+    }
+
+    public double getSumFloats() {
+        return sumFloats;
+    }
+
+    public double getAverageFloats() {
+        return averageFloats;
+    }
+
+    public int getCountString() {
+        return countString;
+    }
+
+    public int getMinStringLength() {
+        return minStringLength;
+    }
+
+    public int getMaxStringLength() {
+        return maxStringLength;
+    }
 }
