@@ -20,14 +20,15 @@ public class Main {
 
         List<Integer> integers = new ArrayList<>();
         List<String> strings = new ArrayList<>();
-        List<Float> floats = new ArrayList<>();
+        List<Double> floats = new ArrayList<>();
 
         for (String pathFile : inputFiles) {
             try (BufferedReader reader = new BufferedReader(new FileReader(pathFile))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
-                    line = reader.readLine();
+//                    System.out.println(line);
+//                    line = reader.readLine();
+                    filteringData(line.trim(), integers, floats, strings);
                 }
 
                 reader.close();
@@ -36,6 +37,18 @@ public class Main {
             }
         }
 
+
+
+
+// Вывод отфильтрованных данных
+//        System.out.println("integers list:");
+//        showItemList(integers);
+//
+//        System.out.println("string list:");
+//        showItemList(strings);
+//
+//        System.out.println("floats list:");
+//        showItemList(floats);
     }
 
     private static void parseArgs(String[] args, List<String> inputFiles) {
@@ -66,5 +79,41 @@ public class Main {
         }
     }
 
+    private static void filteringData(String line, List<Integer> integers, List<Double> floats, List<String> strings) {
+        if (line.isEmpty()) return;
+
+        String[] words = line.split(" "); // либо regex: [\\s,]+
+
+        for (String word : words) {
+            if (word.isEmpty()) continue;
+
+            String cleanedWord = word.replace(",", "."); // Если цисло не целочисленное
+
+            try {
+                if (cleanedWord.matches("-?\\d+")) {
+                    integers.add(Integer.parseInt(cleanedWord));
+                } else if (cleanedWord.matches("-?\\d+\\.\\d+")) {
+                    floats.add(Double.parseDouble(cleanedWord));
+                } else {
+
+                    if (word.contains(".")) {
+                        word = word.replace('.', ' ');
+                    } else if (word.contains(",")) {
+                        word = word.replace(',', ' ');
+                    }
+
+                    strings.add(word);
+                }
+            } catch (NumberFormatException e) {
+                strings.add(word);
+            }
+        }
+    }
+
+    private static <T> void showItemList(List<T> data) {
+        for (int i = 0; i < data.size(); i++) {
+            System.out.println(data.get(i));
+        }
+    }
 
 }
