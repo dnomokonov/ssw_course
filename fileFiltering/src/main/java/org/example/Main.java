@@ -8,7 +8,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 // Путь проекта: ... /ssw_course/fileFiltering
 
@@ -19,7 +21,7 @@ public class Main {
     private static boolean statistMode = false;
 
     public static void main(String[] args) {
-        List<String> inputFiles = new ArrayList<>();
+        Set<String> inputFiles = new HashSet<>();
         parseArgs(args, inputFiles);
 
         List<Integer> integers = new ArrayList<>();
@@ -56,7 +58,7 @@ public class Main {
 //        showItemList(floats);
     }
 
-    private static void parseArgs(String[] args, List<String> inputFiles) {
+    private static void parseArgs(String[] args, Set<String> inputFiles) {
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "-o":
