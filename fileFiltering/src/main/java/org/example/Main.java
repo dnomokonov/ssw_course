@@ -2,7 +2,11 @@ package org.example;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +41,9 @@ public class Main {
             }
         }
 
-
-
+        writerResultOnFiles("integers.txt", integers);
+        writerResultOnFiles("floats.txt", floats);
+        writerResultOnFiles("strings.txt", strings);
 
 // Вывод отфильтрованных данных
 //        System.out.println("integers list:");
@@ -113,6 +118,34 @@ public class Main {
     private static <T> void showItemList(List<T> data) {
         for (int i = 0; i < data.size(); i++) {
             System.out.println(data.get(i));
+        }
+    }
+
+    private static <T> void writerResultOnFiles(String nameFile, List<T> data) {
+        if (data.isEmpty()) return;
+
+        String basePath = System.getProperty("user.dir");
+
+        // Абсолютный или относительный путь?
+        Path resultPath = (!Main.outputPath.isEmpty())
+                ? Paths.get(Main.outputPath, Main.prefix + nameFile)
+                : Paths.get(basePath, Main.prefix + nameFile);
+
+        System.out.println(resultPath.toString());
+
+        try {
+            Files.createDirectories(resultPath.getParent());
+        } catch (IOException e) {
+            System.out.println("Ошибка при создании каталога: " + e.getMessage());
+            return;
+        }
+
+        try (FileWriter writer = new FileWriter(resultPath.toString(), Main.appendMode)) {
+            for (T item : data) {
+                writer.write(item.toString() + System.lineSeparator());
+            }
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
