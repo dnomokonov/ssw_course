@@ -17,8 +17,10 @@ import java.util.Set;
 public class Main {
     private static String outputPath = "";
     private static String prefix = "";
-    private static boolean appendMode = false;
-    private static boolean statistMode = false;
+    private static Boolean appendMode = false;
+    private static Boolean statistMode = null;
+
+    private static final Stats stats = new Stats();
 
     public static void main(String[] args) {
         Set<String> inputFiles = new HashSet<>();
@@ -39,6 +41,7 @@ public class Main {
 
                 reader.close();
             } catch (IOException e) {
+//                System.out.println(e);
                 throw new RuntimeException(e);
             }
         }
@@ -47,27 +50,25 @@ public class Main {
         writerResultOnFiles("floats.txt", floats);
         writerResultOnFiles("strings.txt", strings);
 
-// Вывод отфильтрованных данных
-//        System.out.println("integers list:");
-//        showItemList(integers);
-//
-//        System.out.println("string list:");
-//        showItemList(strings);
-//
-//        System.out.println("floats list:");
-//        showItemList(floats);
+        if (statistMode != null) {
+            if (statistMode) {
+                stats.printFullStats();
+            } else {
+                stats.printShortStats();
+            }
+        }
     }
 
     private static void parseArgs(String[] args, Set<String> inputFiles) {
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "-o":
-                    if (i + 1 < args.length) {
+                    if (i + 1 < args.length && isValidOption(args[i + 1])) {
                         Main.outputPath = args[++i];
                     }
                     break;
                 case "-p":
-                    if (i + 1 < args.length) {
+                    if (i + 1 < args.length && isValidOption(args[i + 1])) {
                         Main.prefix = args[++i];
                     }
                     break;
@@ -81,9 +82,18 @@ public class Main {
                     Main.statistMode = true;
                     break;
                 default:
+                    if (args[i].startsWith("-")) {
+                        System.out.println("Error: Unknown option" + args[i]);
+                        return;
+                    }
+
                     inputFiles.add(args[i]);
             }
         }
+    }
+
+    private  static boolean isValidOption(String option) {
+        return !option.startsWith("-") && !option.trim().isEmpty();
     }
 
     private static void filteringData(String line, List<Integer> integers, List<Double> floats, List<String> strings) {
@@ -99,10 +109,13 @@ public class Main {
             try {
                 if (cleanedWord.matches("-?\\d+")) {
                     integers.add(Integer.parseInt(cleanedWord));
+                    stats.UpdateStatsInteger(Integer.parseInt(cleanedWord));
                 } else if (cleanedWord.matches("-?\\d+\\.\\d+")) {
                     floats.add(Double.parseDouble(cleanedWord));
+                    stats.UpdateStatsFloat(Double.parseDouble(cleanedWord));
                 } else {
 
+//                  Работает некорректно!
                     if (word.contains(".")) {
                         word = word.replace('.', ' ');
                     } else if (word.contains(",")) {
@@ -110,6 +123,7 @@ public class Main {
                     }
 
                     strings.add(word);
+                    stats.UpdateStatsString(word);
                 }
             } catch (NumberFormatException e) {
                 strings.add(word);
@@ -133,12 +147,12 @@ public class Main {
                 ? Paths.get(Main.outputPath, Main.prefix + nameFile)
                 : Paths.get(basePath, Main.prefix + nameFile);
 
-        System.out.println(resultPath.toString());
+//        System.out.println(resultPath.toString());
 
         try {
             Files.createDirectories(resultPath.getParent());
         } catch (IOException e) {
-            System.out.println("Ошибка при создании каталога: " + e.getMessage());
+            System.out.println("Error when creating a folder: " + e.getMessage());
             return;
         }
 
