@@ -10,21 +10,20 @@ public class Main {
     private static final String[] progressBars = new String[COUNT_THREAD];
     private static final Object lock = new Object();
 
-    public static void updateProgressBar(int threadNumber, long threadId, int done, int total) {
-        int progress = (done * PROGRESSBAR_LENGTH) / total;
-
-        StringBuilder barBuilder = new StringBuilder(PROGRESSBAR_LENGTH);
+    public static void updateProgressBar(int threadNumber, long threadId, int progress, int total) {
+        StringBuilder barBuilder = new StringBuilder(total);
 
         String icon = "=";
         for (int i = 0; i < progress; i++) {
             barBuilder.append(icon);
         }
-        for (int i = progress; i < PROGRESSBAR_LENGTH; i++) {
+
+        for (int i = progress; i < total; i++) {
             barBuilder.append(' ');
         }
 
         synchronized (lock) {
-            progressBars[threadNumber - 1] = String.format("Thread %d (ID: %d) |%3d%% %s|", threadNumber, threadId, (done * 100) / total, barBuilder.toString());
+            progressBars[threadNumber - 1] = String.format("Thread %d (ID: %d) |%3d%% %s|", threadNumber, threadId, (progress * 100) / total, barBuilder.toString());
 
             System.out.print("\033[H\033[2J");
             for (String line : progressBars) {
@@ -44,13 +43,13 @@ public class Main {
 
                 long startTimer = System.currentTimeMillis();
 
-                try {
-                    for (int j = 1; j <= PROGRESSBAR_LENGTH; j++) {
-                        updateProgressBar(threadNumber, threadId, j, PROGRESSBAR_LENGTH);
+                for (int j = 1; j <= PROGRESSBAR_LENGTH; j++) {
+                    updateProgressBar(threadNumber, threadId, j, PROGRESSBAR_LENGTH);
+                    try {
                         Thread.sleep(STEP_SLEEP);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
                 }
 
                 long stopTimer = System.currentTimeMillis();
