@@ -7,14 +7,14 @@ public class Pet {
     private String name;
     private String status;
     private Category category;
-    private List<Tag> tag;
+    private List<Tags> tags;
 
-    public Pet(long id, String name, String status, Category category, List<Tag> tag) {
+    public Pet(long id, String name, String status, Category category, List<Tags> tags) {
         this.id = id;
         this.name = name;
         this.status = status;
         this.category = category;
-        this.tag = tag;
+        this.tags = tags;
     }
 
     public long getId() {
@@ -49,11 +49,11 @@ public class Pet {
         this.category = category;
     }
 
-    public List<Tag> getTag() {
-        return tag;
+    public List<Tags> getTags() {
+        return tags;
     }
 
-    public void setTag(List<Tag> tag) {
-        this.tag = tag;
+    public void setTag(List<Tags> tags) {
+        this.tags = tags;
     }
 }

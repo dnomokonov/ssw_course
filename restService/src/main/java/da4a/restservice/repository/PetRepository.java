@@ -23,7 +23,7 @@ public class PetRepository {
 
     public Pet save(Pet pet) {
         currentId = pet.getId();
-        pet = new Pet(pet.getId(), pet.getName(), pet.getStatus(), pet.getCategory(), pet.getTag());
+        pet = new Pet(pet.getId(), pet.getName(), pet.getStatus(), pet.getCategory(), pet.getTags());
         pets.put(currentId, pet);
 
         return pet;

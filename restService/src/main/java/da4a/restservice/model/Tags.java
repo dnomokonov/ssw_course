@@ -1,10 +1,10 @@
 package da4a.restservice.model;
 
-public class Tag {
+public class Tags {
     private long id;
     private String name;
 
-    public Tag(long id, String name) {
+    public Tags(long id, String name) {
         this.id = id;
         this.name = name;
     }

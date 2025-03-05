@@ -16,7 +16,7 @@ public class PetController {
 
     @PostMapping
     public @ResponseBody Pet createPet(@RequestBody Pet pet) {
-        return petService.createPet(pet.getId(), pet.getName(), pet.getStatus(), pet.getCategory(), pet.getTag());
+        return petService.createPet(pet.getId(), pet.getName(), pet.getStatus(), pet.getCategory(), pet.getTags());
     }
 
     @PutMapping

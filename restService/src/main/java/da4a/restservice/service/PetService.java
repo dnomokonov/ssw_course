@@ -21,7 +21,7 @@ public class PetService {
         return repository.findById(id);
     }
 
-    public Pet createPet(Long id, String name, String status, Category category, List<Tag> tags) {
+    public Pet createPet(Long id, String name, String status, Category category, List<Tags> tags) {
         return repository.save(new Pet(id, name, status, category, tags));
     }
 
