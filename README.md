@@ -12,3 +12,16 @@ Task description [file📗](/misc/homework3.pdf)
 ## [Homework #4. REST service](/restService/)
 Create a REST service that implements the API from the app.yaml file. \
 Task description [file📗](/misc/homework4.pdf)
+
+## [Homework #5. Migrations](/Migrations/)
+Configure database migrations using Liquibase. \
+Task description [file📗](/misc/homework5.pdf)
+
+## [Homework #6. Comments service](/)
+1. Design the API for the comments service (OPENAPI 3.x -> api.yaml)
+2. Project generation via API (swagger Editor)
+3. Service implementation (configure migrations)
+4. Add logger
+
+## [Homework #7. Not started](/)
+Task description [file📗](/misc/homework7.pdf)
