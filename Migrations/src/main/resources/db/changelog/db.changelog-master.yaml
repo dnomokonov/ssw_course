@@ -1,0 +1,89 @@
+databaseChangeLog:
+  - changeSet:
+      id: 0
+      author: da4a
+      changes:
+        - createTable:
+            tableName: category
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+        - createTable:
+            tableName: tags
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+        - createTable:
+            tableName: pet
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: id_category
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_pet_category
+                    references: category(id)
+        - createTable:
+            tableName: pet_tags
+            columns:
+              - column:
+                  name: id_pet
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_pet_tags_pet
+                    references: pet(id)
+              - column:
+                  name: id_tag
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_pet_tags_tag
+                    references: tags(id)
+  - changeSet:
+      id: 1
+      author: da4a
+      changes:
+        - sql:
+            sql: |
+              ALTER TABLE pet_tags ADD CONSTRAINT pet_tags_pkey PRIMARY KEY (id_pet, id_tag)
+            failOnError: false  # Игнорировать ошибку, если ключ уже существует
