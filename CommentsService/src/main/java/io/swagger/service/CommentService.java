@@ -2,7 +2,6 @@ package io.swagger.service;
 
 import io.swagger.model.Comments;
 import io.swagger.repository.CommentRepository;
-import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -24,21 +23,16 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public Comments getCommentById(Long commentId) {
+    public Comments getCommentById(Long commentId) throws NotFoundException {
         log.info("Requesting comment with ID: {}", commentId);
-        try {
-            return commentRepository.findById(commentId)
-                    .orElseThrow(() -> {
-                        log.error("Comment with ID {} not found", commentId);
-                        return new NotFoundException(404, "Comment not found with ID: " + commentId);
-                    });
-        } catch (NotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        return commentRepository.findById(commentId)
+                .orElseThrow(() -> {
+                    log.error("Comment with ID {} not found", commentId);
+                    return new NotFoundException(404, "Comment not found with ID: " + commentId);
+                });
     }
 
-    @SneakyThrows
-    public Comments updateComment(Long commentId, Comments comment) {
+    public Comments updateComment(Long commentId, Comments comment) throws NotFoundException {
         log.info("Updating comment with ID: {}", commentId);
         if (!commentRepository.existsById(commentId)) {
             log.error("Comment with ID {} not found", commentId);
@@ -48,15 +42,11 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public void deleteComment(Long commentId) {
+    public void deleteComment(Long commentId) throws NotFoundException {
         log.info("Deleting comment with ID: {}", commentId);
         if (!commentRepository.existsById(commentId)) {
             log.error("Comment with ID {} not found", commentId);
-            try {
-                throw new NotFoundException(404, "Comment not found with ID: " + commentId);
-            } catch (NotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            throw new NotFoundException(404, "Comment not found with ID: " + commentId);
         }
         commentRepository.deleteById(commentId);
     }
