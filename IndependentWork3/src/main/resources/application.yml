@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    username: postgres
+    password: nomokon
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/emp_db
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog.sql
