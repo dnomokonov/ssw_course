@@ -23,7 +23,10 @@ Task description [file📗](/misc/homework5.pdf)
 3. Service implementation (configure migrations)
 4. Add logger
 
-![Meme](/misc/mem6.gif)
-
-## [Homework #7. Not started](/)
+## [Homework #7. Order System](/OrderSystem/)
 Task description [file📗](/misc/homework7.pdf)
+
+## [Homework #8. Authentication](/Authentication/)
+Photo: [Description of homework📗](/misc/homework8.jpg)
+
+![Meme](/misc/mem6.gif)
