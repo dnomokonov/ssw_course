@@ -43,12 +43,17 @@ Docker-compose was also used
 docker-compose up -d
 ```
 
-### How to stop docker-compose (Saving keycloak configuration)
+### How to stop docker-compose
+```
+docker-compose stop
+```
+
+### How to delete docker-compose (Saving keycloak configuration)
 ```
 docker-compose down
 ```
 
-### How to stop docker-compose (Not Saving keycloak configuration)
+### How to delete docker-compose (Not Saving keycloak configuration)
 ```
 docker-compose down -v
 ```
