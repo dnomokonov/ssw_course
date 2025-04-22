@@ -30,3 +30,29 @@ Task description [file📗](/misc/homework7.pdf)
 Photo: [Description of homework📗](/misc/homework8.jpg)
 
 ![Meme](/misc/mem6.gif)
+
+## [Homework #9. Authentication + JWT](/Homework9/)
+Task description [file📗](/misc/homework9.pdf)
+
+## [Homework #10. Authentication + Keycloak](/Homework10/)
+Task description [file📗](/misc/homework10.pdf) \
+Docker-compose was also used 
+
+### How to start docker-compose
+```
+docker-compose up -d
+```
+
+### How to stop docker-compose (Saving keycloak configuration)
+```
+docker-compose down
+```
+
+### How to stop docker-compose (Not Saving keycloak configuration)
+```
+docker-compose down -v
+```
+
+## [Homework #11. Veterinary Platform](/)
+The concept: A single ecosystem for animal owners, veterinarians, and clinics with AI analytics and
+telemedicine.
